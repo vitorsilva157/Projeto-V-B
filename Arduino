@@ -1,0 +1,38 @@
+int sensorTemp = A0;
+int ldr = A1;
+int SensorUmidPino = A2;
+
+void setup()
+{
+  Serial.begin(9600);
+
+  
+  Serial.println("Temperatura,Umidade,Luminosidade,Ambiente");
+}
+
+void loop()
+{
+  // Temperatura 
+  int valorSensorTemp = analogRead(sensorTemp);
+  float tensao = valorSensorTemp * 5.0 / 1023.0;
+  float temperaturaC = (tensao - 0.5) * 100.0;
+
+  //  Umidade
+  int valorUmidade = analogRead(SensorUmidPino);
+  float umidade = map(valorUmidade, 0, 1023, 0, 100);
+
+  //  Luminosidade 
+  int valorLDR = analogRead(ldr);
+  String ambiente = (valorLDR > 60) ? "Claro" : "Escuro";
+
+  
+  Serial.print(temperaturaC);
+  Serial.print(",");
+  Serial.print(umidade);
+  Serial.print(",");
+  Serial.print(valorLDR);
+  Serial.print(",");
+  Serial.println(ambiente);
+
+  delay(1000); 
+}
